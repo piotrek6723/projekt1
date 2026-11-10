@@ -53,8 +53,37 @@ class Creature:
 
 
 class Prey(Creature):
-    pass
+    name = "Prey"
+
+    def __init__(self, p_death: float, p_reproduce: float, p_hunt: float):
+        super().__init__(p_death, p_reproduce)
+        self.p_hunt = min(1.0, max(0.0, p_hunt))
+
+    def reproduce(self):
+        if self.alive and random.random() < self.p_reproduce:
+            return Prey(self.p_death, self.p_reproduce, self.p_hunt)
+        return None
 
 
 class Predator(Creature):
-    pass
+    name = "Predator"
+    p_death_hungry = 0.9
+
+    def __init__(self, p_death: float, p_reproduce: float):
+        super().__init__(p_death, p_reproduce)
+        self.hungry = True
+
+    def hunt(self, prey):
+        if self.alive and self.hungry and prey.alive:
+            if random.random() < prey.p_hunt:
+                prey.alive = False
+                self.hungry = False
+                return True
+        return False
+
+    def kill(self):
+        if self.hungry:
+            if random.random() < self.p_death_hungry:
+                self.alive = False
+        else:
+            super().kill()
