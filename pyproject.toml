@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dop_2026"
+version = "0.1"
+description = "Examples for the programming course"
+requires-python = ">=3.11"
+dependencies = [
+    "jupyter",
+    "jupytext",
+    "numpy",
+    "pandas",
+    "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src", "src.*"]
